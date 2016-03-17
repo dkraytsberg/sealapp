@@ -2,10 +2,10 @@ var Button = require('./button.model');
 var _ = require('lodash');
 
 function returnButtons(req, res) {
-  Button.find({}, null, {sort : {'presses' : -1}}, (err, btns) => {
+  Button.find({}, null, {sort : {'presses' : -1}}, function (err, btns) {
     if(err) res.status(404).json('find err');
-    
-    var mappedbtns = _.keyBy(btns, (o) => {
+
+    var mappedbtns = _.keyBy(btns, function (o) {
       return o.name;
     });
 
@@ -13,7 +13,7 @@ function returnButtons(req, res) {
   });
 }
 
-exports.press = (req, res) => {
+exports.press = function (req, res) {
   var button = req.query.button;
   var amount = req.query.amount;
 
@@ -24,9 +24,9 @@ exports.press = (req, res) => {
   returnButtons(req, res);
 };
 
-exports.reset = (req, res) => {
-  Button.update({"name" : "seal"}, {$set : {"presses": 0}}, (err, num) => {});
-  Button.update({"name" : "notseal"}, {$set : {"presses": 0}}, (err, num) => {});
+exports.reset = function (req, res) {
+  Button.update({"name" : "seal"}, {$set : {"presses": 0}}, function (err, num){});
+  Button.update({"name" : "notseal"}, {$set : {"presses": 0}}, function (err, num){});
 
   returnButtons(req, res);
 }

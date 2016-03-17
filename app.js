@@ -8,7 +8,7 @@ app.set('port', process.env.PORT || 3000);
 
 app.set('mongo_uri', process.env.MONGOLAB_URI || 'mongodb://localhost/test');
 
-mongoose.connect(app.get('mongo_uri'), (err) => {
+mongoose.connect(app.get('mongo_uri'), function (err) {
   if(err) console.log(err);
 });
 
@@ -16,7 +16,7 @@ app.use(express.static(__dirname + '/node_modules'));
 app.use(express.static(__dirname + '/client/main'));
 app.use(express.static(__dirname + '/assets/images'));
 
-app.get('/', (req, res) => {
+app.get('/', function (req, res) {
   res.render('index.html');
 });
 
@@ -24,6 +24,6 @@ app.post('/buttons/press', btncontroller.press);
 app.post('/buttons/reset', btncontroller.reset);
 
 
-app.listen(app.get('port'), () => {
+app.listen(app.get('port'), function () {
   console.log('listening on port', app.get('port'));
 });
